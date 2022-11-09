@@ -14,3 +14,7 @@ compilador para os testes do jest
  npm  install @swc/core @swc/jest --save-dev
 
 npm install  @types/lodash --save-dev
+
+npm install  uuid
+
+npm install  @types/uuid --save-dev

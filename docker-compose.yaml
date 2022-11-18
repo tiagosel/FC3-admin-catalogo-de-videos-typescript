@@ -5,3 +5,4 @@ services:
     container_name: micro-videos-typescript-app
     volumes:
       - .:/home/node/app
+      #- ./home/$(whoami)/.ssh:/home/node/.ssh

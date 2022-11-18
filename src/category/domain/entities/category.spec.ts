@@ -1,6 +1,6 @@
 import { Category, CategoryProperties } from "./category";
 import { omit } from "lodash";
-import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
+import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
 describe("Category Unit Tests", ():void => {
   test("constructor of category", ():void => {
     let category = new Category({ name: "Movie" });

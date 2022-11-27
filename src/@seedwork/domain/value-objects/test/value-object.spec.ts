@@ -1,22 +1,22 @@
 import ValueObject from "../value-object";
 
-class StubValueObject extends ValueObject<any> {}
+class StubValueObject extends ValueObject {}
 
-describe("UniqueEntityId Unit Tests", (): void => {
-  it("should set value", (): void => {
-    let stub: StubValueObject = new StubValueObject("teste");
-    expect(stub.value).toBe("teste");
+//mock/spy - instancia fake
+//stub
+describe("ValueObject Unit Tests", () => {
+  it("should set value", () => {
+    let vo = new StubValueObject("string value");
+    expect(vo.value).toBe("string value");
 
-    stub = new StubValueObject({ prop: "valor" });
-    expect(stub.value).toStrictEqual({ prop: "valor" });
+    vo = new StubValueObject({ prop1: "value1" });
+    expect(vo.value).toStrictEqual({ prop1: "value1" });
   });
 
   describe("should convert to a string", () => {
     const date = new Date();
     let arrange = [
       { received: "", expected: "" },
-      { received: undefined, expected: "undefined" },
-      { received: null, expected: "null" },
       { received: "fake test", expected: "fake test" },
       { received: 0, expected: "0" },
       { received: 1, expected: "1" },
@@ -34,14 +34,31 @@ describe("UniqueEntityId Unit Tests", (): void => {
       "from $received to $expected",
       ({ received, expected }) => {
         const vo = new StubValueObject(received);
-        //quando concatenado com uma string o metodo toString é chamado
         expect(vo + "").toBe(expected);
-        //chamando direto o toString
-        expect(vo.toString()).toBe(expected);
-
-        //chamando to string e concatenado com string vazia
-        expect(vo.toString()+"").toBe(expected);
       }
     );
+  });
+
+  it("should be a immutable object", () => {
+    const obj = {
+      prop1: "value1",
+      deep: { prop2: "value2", prop3: new Date() },
+    };
+    const vo = new StubValueObject(obj);
+
+
+    expect(() => {
+      (vo as any).value.prop1 = "test";
+    }).toThrow(
+      "Cannot assign to read only property 'prop1' of object '#<Object>'"
+    );
+
+    expect(() => {
+      (vo as any).value.deep.prop2 = "test";
+    }).toThrow(
+      "Cannot assign to read only property 'prop2' of object '#<Object>'"
+    );
+
+    expect(vo.value.deep.prop3).toBeInstanceOf(Date);
   });
 });

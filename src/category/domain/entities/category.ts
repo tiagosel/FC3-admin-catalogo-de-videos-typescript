@@ -34,6 +34,11 @@ export class Category extends Entity<CategoryProperties> {
 
   }
 
+  private set name(value:string){
+    this.props.name = value ?? null
+
+  }
+
 
 
   get is_active():boolean {
@@ -49,6 +54,17 @@ export class Category extends Entity<CategoryProperties> {
     return this.props.created_at;
   }
 
+  public update(name:string,description:string):void{
+    this.name = name;
+    this.description = description;
+  }
+
+  public activate():void{
+    this.props.is_active = true;
+  }
+  public deactivate():void{
+    this.props.is_active = false;
+  }
 
   
 }

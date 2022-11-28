@@ -53,11 +53,13 @@ describe("Category Unit Tests", ():void => {
       created_at,
     });
   });
-  test("getter of name prop", (): void => {
+  test("getter and setter of name prop", (): void => {
     let category = new Category({ name: "Movie" });
     expect(category.name).toBe("Movie");
     category = new Category({ name: null });
     expect(category.name).toBeNull();
+    category['name'] = "New Movie"
+    expect(category.name).toBe("New Movie");
   });
   test("getter and setter of description prop", (): void => {
     let category: Category = new Category({ name: "Movie" });
@@ -116,5 +118,32 @@ describe("Category Unit Tests", ():void => {
       expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     });
   
+  });
+
+  it('Should active category',()=>{
+    const arrange = { name: "Movie",is_active:false } ;
+    const category = new Category(arrange);
+    expect(category.props.is_active).not.toBeTruthy();
+    category.activate();
+    expect(category.props.is_active).toBeTruthy();
+  });
+  it('Should deactivate category',()=>{
+    const arrange = { name: "Movie",is_active:true } ;
+    const category = new Category(arrange);
+    expect(category.props.is_active).toBeTruthy();
+    category.deactivate();
+    expect(category.props.is_active).not.toBeTruthy();
+  });
+  it('should update category',()=>{
+    const  date:Date = new Date();
+    const arrange = { name: "Movie",is_active:true,description:"Movie Description" ,created_at:date} ;
+    const arrangeNewValue = { name: "Movie Changed",is_active:true,description:"Movie Description Changed",created_at:date } ;
+    const category = new Category(arrange);
+    expect(category.props).toStrictEqual(arrange);
+    category.update(arrangeNewValue.name,arrangeNewValue.description);
+    expect(category.props).toStrictEqual(arrangeNewValue);
+    expect(category.props.name).toBe(arrangeNewValue.name);
+    expect(category.props.description).toBe(arrangeNewValue.description);
+
   });
 });

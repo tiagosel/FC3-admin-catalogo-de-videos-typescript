@@ -56,8 +56,7 @@ describe("Category Unit Tests", ():void => {
   test("getter and setter of name prop", (): void => {
     let category = new Category({ name: "Movie" });
     expect(category.name).toBe("Movie");
-    category = new Category({ name: null });
-    expect(category.name).toBeNull();
+
     category['name'] = "New Movie"
     expect(category.name).toBe("New Movie");
   });
